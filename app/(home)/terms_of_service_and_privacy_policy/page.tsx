@@ -167,8 +167,9 @@ export default function LegalContent() {
             <section>
               <h2 className="text-2xl font-semibold text-emerald-600 dark:text-emerald-400 mb-3">4. Refund Policy</h2>
               <p className="text-muted-foreground">
-                Due to the nature of digital services, payments are generally non-refundable.
-                If you experience issues, contact support and we will assist you.
+                We offer a 7-day free trial so you can fully evaluate the service before making a purchase.
+                After the trial period, payments are processed for continued access to the platform.
+                If you experience any issues, please contact support and we will do our best to assist you.
               </p>
             </section>
 
