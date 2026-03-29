@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const Logo = ({ size = 45, withName }: { size?: number, withName?: boolean }) => {
   return (
-    <div className="group/logo flex">
+    <div>
       <Link
         href={"/"}
         className="flex items-center justify-center gap-3 hover:gap-4 transition-all duration-500 ease-out-expo"
@@ -14,6 +14,10 @@ export const Logo = ({ size = 45, withName }: { size?: number, withName?: boolea
             alt="OpenFeed Logo"
             width={size}
             height={size}
+            style={{
+              width: size,
+              height: size,
+            }}
           />
           <div className="absolute inset-0 rounded-2xl border-2 border-white/30 dark:border-black/20 transition-colors duration-300" />
         </div>

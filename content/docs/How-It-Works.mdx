@@ -1,0 +1,130 @@
+---
+title: How It Works
+description: Learn how OpenFeed's embeddable widget connects to your dashboard and delivers feedback, roadmap, and changelog to your users.
+---
+
+# How It Works
+
+OpenFeed is built around one idea: you should never have to touch your code again after the initial install. Here's how that works in practice.
+
+## The big picture
+
+When you add the OpenFeed script tag to your app, it loads a small widget bundle from our CDN. That bundle reaches out to your project's configuration, reads your current settings, and renders the widget exactly as you've configured it — colors, position, which tabs are enabled, everything.
+
+When you update something in your dashboard — say you change the primary color or publish a new changelog entry — the change is reflected the next time the widget loads. No deployments. No code changes.
+
+```
+Your app
+  └── loads widget.js (4kb, async)
+        └── fetches your project config
+              └── renders widget in Shadow DOM
+                    ├── Feedback tab
+                    ├── Roadmap tab
+                    └── Changelog tab
+```
+
+## The widget
+
+The widget runs inside a [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM) — a completely isolated rendering environment built into the browser. This means the widget's styles are fully contained and will never interfere with your app's CSS, no matter what framework or design system you use.
+
+The widget button floats at your chosen position (bottom-right by default) or can be mounted as a drawer on the left or right edge of the screen. Clicking it opens a panel with the tabs you've enabled.
+
+## Installation
+
+There are two ways to install OpenFeed.
+
+**Script tag — works with any tech stack:**
+
+```html
+<script 
+  async 
+  src="https://cdn.openfeed.ink/widget/v1/widget.iife.js" 
+  data-project-id="your-project-id">
+</script>
+```
+
+Place this anywhere in your HTML — typically in the `<head>` or before the closing `</body>` tag. The `async` attribute means it loads without blocking your page.
+
+**npm package — for React apps:**
+
+```bash
+npm install @openfeed/widget
+# or
+pnpm add @openfeed/widget
+# or
+yarn add @openfeed/widget
+```
+### React
+```tsx
+import { OpenFeed } from '@openfeed-ink/widget'
+
+export default function App() {
+  return (
+    <>
+      <YourApp />
+      <OpenFeed projectId="your-project-id" />
+    </>
+  )
+}
+```
+
+### Next.js 
+
+```tsx 
+// app/layout.tsx
+import { OpenFeed } from '@openfeed-ink/widget'
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <OpenFeed projectId="your-project-id" />
+      </body>
+    </html>
+  )
+}
+```
+
+Both approaches use the same underlying widget and pull configuration from the same dashboard.
+
+## Anonymous users
+
+OpenFeed supports feedback and upvotes from users who aren't logged in. Anonymous sessions are tracked using a secure token stored in the browser's cookies. This means someone can submit feedback, come back the next day, and their upvotes and submissions are still associated with them — without creating an account.
+
+If you want to associate feedback with specific users in your system, you can pass user metadata to the widget. This is optional.
+
+## The dashboard
+
+Your dashboard is where all management happens. From here you can:
+
+- Read and respond to feature requests
+- Change feature statuses (Under Review → Planned → In Progress → Done)
+- Drag roadmap items between columns
+- Write and publish changelog entries
+- Build and preview your widget configuration
+- Invite team members
+- View analytics
+
+The widget builder inside the dashboard shows a live preview of your widget as you make changes. What you see in the preview is exactly what your users will see.
+
+## AI duplicate detection
+
+When a user types a new feature request, OpenFeed runs a semantic similarity check against all existing posts before the submission is saved. This uses [pgvector](https://github.com/pgvector/pgvector) to compare the meaning of the new submission — not just the exact words — against your existing feedback.
+
+If a similar post already exists, the user sees it and can upvote that post instead. This keeps your board clean without any manual merging work.
+
+## The AI Product Advisor
+
+The Product Advisor is an agentic AI — meaning it has access to tools that let it query your feedback data directly rather than working from a static snapshot.
+
+When you ask it a question, it decides what data it needs, calls the relevant tools (top requested features, roadmap status, specific feature details), and uses those results to form its answer. It can chain multiple lookups before responding.
+
+This is meaningfully different from sending all your data in a single prompt. The AI actively investigates before it answers.
+
+## Data and privacy
+
+- Widget interactions (opens, upvotes, submissions) are stored in your project's database
+- For cloud users, data is stored in our PostgreSQL database hosted in the EU
+- For self-hosted users, data never leaves your infrastructure
+- Anonymous user tokens are stored only in the user's browser cookies — we don't link them to any identity

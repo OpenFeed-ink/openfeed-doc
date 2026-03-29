@@ -1,0 +1,128 @@
+---
+title: Cloud
+description: Get started with OpenFeed Cloud — hosted feedback, roadmap, and changelog for your app. 7-day free trial, no credit card required.
+---
+
+# OpenFeed Cloud
+
+OpenFeed Cloud is the hosted version of OpenFeed. We handle the infrastructure, updates, and uptime — you focus on your product.
+
+## Getting started
+
+**1. Create your account**
+
+Go to [app.openfeed.ink](https://app.openfeed.ink) and sign up. No credit card required to start. You get a 7-day free trial on any paid plan.
+
+**2. Create a project**
+
+After signing in, create your first project. Give it a name — this is usually your product name. A project slug is generated automatically, which is what you'll use in your widget script tag.
+
+**3. Install the widget**
+
+Add the following to your app — in the `<head>` tag or before the closing `</body>`:
+
+```html
+<script
+  async
+  src="https://cdn.openfeed.ink/widget/v1/widget.iife.js" 
+  data-project-id="your-project-slug">
+</script>
+```
+
+For React/Next.js apps:
+
+```bash
+npm install @openfeed/widget
+# or
+pnpm add @openfeed/widget
+# or
+yarn add @openfeed/widget
+```
+
+```tsx
+import { OpenFeed } from '@openfeed-ink/widget'
+
+export default function App() {
+  return (
+    <>
+      <YourApp />
+      <OpenFeed projectId="your-project-id" />
+    </>
+  )
+}
+
+```
+
+Next.js
+
+```tsx
+// app/layout.tsx
+import { OpenFeed } from '@openfeed-ink/widget'
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <OpenFeed projectId="your-project-id" />
+      </body>
+    </html>
+  )
+}
+```
+
+That's the only code you'll ever write for OpenFeed. Everything after this is done from your dashboard.
+
+**4. Configure your widget**
+
+Head to **Widget Builder** in your dashboard. You'll see a live preview on the right and controls on the left. Set your brand color, choose a button position, and toggle which tabs you want visible — Feedback, Roadmap, Changelog.
+
+Click save. Your widget updates immediately.
+
+**5. Start collecting feedback**
+
+Share your app with users. The widget will appear at the position you chose. Users can submit feature requests, upvote existing ones, and check your roadmap — all without leaving your product.
+
+## Plans
+
+OpenFeed Cloud is available on three plans. All plans include every feature — the difference is the number of projects and team members.
+
+| | Starter | Growth | Scale |
+|---|---|---|---|
+| Price | $15/month | $29/month | $59/month |
+| Projects | 1 | 5 | Unlimited |
+| Team members | 5 | 15 | Unlimited |
+| AI Product Advisor | ✅ | ✅ | ✅ |
+| Custom domain | ❌ | ❌ | ✅ |
+| Webhooks | ❌ | ❌ | ✅ |
+| API access | ❌ | ✅ | ✅ |
+
+All plans include unlimited end users. We do not charge based on how many people interact with your widget.
+
+## Trial and billing
+
+Your 7-day free trial starts when you choose a plan. You can cancel anytime during the trial and you won't be charged. No credit card is required to start.
+
+After the trial, billing is monthly. You can upgrade, downgrade, or cancel from **Settings → Billing** in your dashboard — no email required.
+
+## Inviting your team
+
+Go to **Settings → Team** to invite teammates by email. Each person you invite receives an email with a link to join your project.
+
+There are two roles:
+
+- **Admin** — full access to everything including billing and project settings
+- **Member** — can manage feedback, roadmap, and changelog, but cannot change project settings or billing
+
+## Frequently asked questions
+
+**Can I switch plans later?**
+Yes. You can upgrade or downgrade at any time from your billing settings. Changes take effect immediately and billing is prorated.
+
+**What happens to my data if I cancel?**
+Your data remains accessible for 30 days after cancellation. You can export it or migrate to a self-hosted instance during that window.
+
+**Is there a free plan?**
+There is no free cloud plan. If you want to use OpenFeed for free, the self-hosted option  and completely free — you just run it on your own server. [Self-hosting guide →](/self-hosting)
+
+**Do you offer annual billing?**
+Not yet. Monthly billing only for now.

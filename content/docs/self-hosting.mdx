@@ -1,0 +1,159 @@
+---
+title: Self-hosting
+description: Run OpenFeed on your own infrastructure using Docker. Free forever, AGPL-3.0 licensed, full control over your data.
+---
+
+# Self-hosting
+
+OpenFeed is AGPL-3.0 licensed and free to self-host. You get every feature with no limits, and your data never leaves your infrastructure.
+
+## Requirements
+
+- [Docker](https://docs.docker.com/get-docker/) installed
+- [Docker Compose](https://docs.docker.com/compose/install/) installed
+- A server or machine with at least 512MB of RAM
+- A domain name (optional but recommended for production)
+
+## Quick start
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/OpenFeed-ink/openfeed
+cd openfeed
+
+# 2. Copy the environment file
+cp .env.example .env
+
+# 3. Edit your environment variables 
+nano .env
+
+# 4. Run the setup script
+docker compose -f docker-compose.yml --env-file .env up --detach --remove-orphans
+
+```
+
+OpenFeed will be running at `http://localhost:8080`.
+
+The setup script handles everything: starts the PostgreSQL container, waits for it to be ready, runs database migrations, and starts the app.
+
+## Environment variables
+
+Open the .env file in your favorite editor and update the settings (e.g., API keys, database connection strings) and fill in the following values:
+
+```bash
+# for ultimite 
+ENV=OS
+
+# Database — leave this as-is if using the included PostgreSQL container
+DATABASE_URL=postgresql://openfeed:openfeed@postgres:5432/openfeed
+
+# Required — generate a random 32-character string
+# You can run: openssl rand -base64 32
+BETTER_AUTH_SECRET=your-secret-here
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+
+# Email — required for team invitations
+RESEND_API_KEY=
+RESEND_EMAIL=onboarding@resend.dev
+
+
+# OpenAI — required for AI features (Product Advisor, duplicate detection)
+# Get your key at platform.openai.com
+OPENAI_KEY=sk-...
+OPENAI_ENDPOINT=https://api.openai.com/v1
+OPENAI_AGENT_MODEL=gpt-4o-mini
+
+# REDIS
+REDIS_URL=
+
+```
+## What's included
+
+The `docker-compose.yml` file spins up two containers:
+
+- **app** — the Next.js application running on port 8080
+- **postgres** — PostgreSQL 15 with a persistent volume for your data
+
+Data is stored in a Docker volume called `postgres_data`. It persists across restarts and container updates.
+
+## Updating
+
+When a new version of OpenFeed is released:
+
+```bash
+# Pull the latest code
+git pull origin main
+
+# Rebuild and restart
+docker-compose down
+docker-compose up -d --build
+
+# Migrations run automatically on startup
+```
+
+We follow semantic versioning. Breaking changes are documented in the [changelog](https://github.com/OpenFeed-ink/openfeed/releases).
+
+## Running in production
+
+For a production deployment, there are a few additional steps worth taking.
+
+**Use a reverse proxy**
+
+Run Nginx or Caddy in front of the app container to handle HTTPS and domain routing. Here's a minimal Caddy configuration:
+
+```
+yourdomain.com {
+  reverse_proxy localhost:8080
+}
+```
+
+Caddy handles SSL certificates automatically via Let's Encrypt.
+
+**Set your domain in the environment**
+
+Then restart the containers:
+
+```bash
+docker-compose down && docker-compose up -d
+```
+
+**Backups**
+
+Back up the `postgres_data` Docker volume regularly. A simple approach using pg_dump:
+
+```bash
+docker exec openfeed-postgres-1 pg_dump -U openfeed openfeed > backup.sql
+```
+
+Schedule this with a cron job and store backups offsite.
+
+## Disabling AI features
+
+If you don't want to use OpenAI, leave `OPENAI_KEY` empty in your `.env`. The AI Product Advisor and duplicate detection will be disabled, but all other features work normally.
+
+## Troubleshooting
+
+**The app won't start**
+
+Check that Docker is running and that port 8080 isn't already in use on your machine. Run `docker-compose logs app` to see error output.
+
+**Database connection errors**
+
+Make sure the `postgres` container is healthy before the app starts. The setup script waits for this, but if you're starting manually, give it a few seconds after running `docker-compose up -d postgres` before starting the app container.
+
+**Migrations failed**
+
+Run migrations manually:
+
+```bash
+docker-compose exec app npm run generate & npm run pushdb
+```
+
+## Getting help
+
+- Open an issue on [GitHub](https://github.com/OpenFeed-ink/openfeed/issues)
