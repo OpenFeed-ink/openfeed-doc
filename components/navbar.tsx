@@ -42,12 +42,13 @@ interface NavbarProps {
   ctaUrl?: string;
   githubUrl?: string;
 }
-
+// 
 const Navbar = ({
   menu = [
     { title: "Document", url: "/docs" },
+    { title: "Terms of Service", url: "/terms_of_service_and_privacy_policy" },
     { title: "Pricing", url: "/pricing" },
-/*     { title: "Blog", url: "/blog" }, */
+    /*     { title: "Blog", url: "/blog" }, */
   ],
   ctaText = "Get started",
   ctaUrl = "https://app.openfeed.ink",
