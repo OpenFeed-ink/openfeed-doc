@@ -46,7 +46,7 @@ interface NavbarProps {
 const Navbar = ({
   menu = [
     { title: "Document", url: "/docs" },
-    { title: "Pricing", url: "#pricing" },
+    { title: "Pricing", url: "/pricing" },
 /*     { title: "Blog", url: "/blog" }, */
   ],
   ctaText = "Get started",
