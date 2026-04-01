@@ -29,7 +29,7 @@ export default function LegalContent() {
               <h2 className="text-2xl font-semibold text-emerald-600 dark:text-emerald-400 mb-3">1. Introduction</h2>
               <p className="text-muted-foreground leading-relaxed">
                 Welcome to OpenFeed, an open-source feedback, roadmap, and changelog platform.
-                By using OpenFeed Cloud, you agree to these Terms. If you do not agree, please do not use the Service.
+                By using OpenFeed Cloud operated by <strong>mailtana</strong>, you agree to these Terms. If you do not agree, please do not use the Service.
               </p>
             </section>
 
@@ -167,9 +167,10 @@ export default function LegalContent() {
             <section>
               <h2 className="text-2xl font-semibold text-emerald-600 dark:text-emerald-400 mb-3">4. Refund Policy</h2>
               <p className="text-muted-foreground">
-                We offer a 7-day free trial so you can fully evaluate the service before making a purchase.
-                After the trial period, payments are processed for continued access to the platform.
-                If you experience any issues, please contact support and we will do our best to assist you.
+                We offer a 7-day free trial so you can evaluate the service before purchasing.
+                After a successful payment, customers may request a full refund within 7 days of the initial charge. Refund requests made after this period are not guaranteed and will be handled at our discretion.
+                To request a refund, please contact us at: aliamer19ali@gmail.com
+                After a refund is issued, access to paid features may be revoked.
               </p>
             </section>
 
@@ -190,7 +191,8 @@ export default function LegalContent() {
               </h2>
               <p className="text-muted-foreground">
                 Email: aliamer19ali@gmail.com<br />
-                Website: <Link href="/" className="text-emerald-600 hover:underline">openfeed.ink</Link>
+                Website: <Link href="/" className="text-emerald-600 hover:underline">openfeed.ink</Link><br />
+                Legal Entity: <span className="text-emerald-600 hover:underline">mailtana</span>
               </p>
             </section>
 
