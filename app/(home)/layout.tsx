@@ -1,14 +1,15 @@
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { baseOptions } from '@/lib/layout.shared';
 import { Metadata, Viewport } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: "OpenFeed: Open Source Alternative to Canny and Frill",
   description: "Collect feedback, manage your roadmap, and publish changelog updates",
   metadataBase: new URL("https://openfeed.ink"),
-    applicationName: "OpenFeed",
+  applicationName: "OpenFeed",
   openGraph: {
-   title: "OpenFeed",
+    title: "OpenFeed",
     images: [
       {
         url: "/opengraph-image.jpg",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
         height: 630,
         type: "image/jpeg",
       },
-    ],  
+    ],
   },
   keywords: [
     'open source canny alternative',
@@ -42,5 +43,8 @@ export const viewport: Viewport = {
 };
 
 export default function Layout({ children }: LayoutProps<'/'>) {
-  return <HomeLayout {...baseOptions()}>{children}</HomeLayout>;
+  return <HomeLayout {...baseOptions()}>
+    {children}
+    <GoogleAnalytics gaId="G-V09MMRPE05" />
+  </HomeLayout>;
 }

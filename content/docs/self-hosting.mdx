@@ -72,12 +72,45 @@ OPENAI_AGENT_MODEL=gpt-4o-mini
 REDIS_URL=
 
 ```
+Run migrations database:
+
+```bash
+docker-compose exec app npm run generate & npm run pushdb
+```
+
+Enable vector search in postgres: run sql in your database 
+
+```sql
+ALTER TABLE feature
+ADD COLUMN search_vector tsvector
+GENERATED ALWAYS AS (
+  setweight(to_tsvector('simple', coalesce(title, '')), 'A') ||
+  setweight(to_tsvector('simple', coalesce(description, '')), 'B')
+) STORED;
+
+-- For full text search
+CREATE INDEX feature_search_idx
+ON feature
+USING GIN (search_vector);
+
+-- For trigram similarity on title
+CREATE INDEX feature_title_trgm_idx
+ON feature
+USING GIN (title gin_trgm_ops);
+
+CREATE INDEX feature_description_trgm_idx
+ON feature
+USING GIN (description gin_trgm_ops);
+
+```
+
 ## What's included
 
 The `docker-compose.yml` file spins up two containers:
 
 - **app** — the Next.js application running on port 8080
 - **postgres** — PostgreSQL 15 with a persistent volume for your data
+- **redis** - for caching event
 
 Data is stored in a Docker volume called `postgres_data`. It persists across restarts and container updates.
 
@@ -145,14 +178,6 @@ Check that Docker is running and that port 8080 isn't already in use on your mac
 **Database connection errors**
 
 Make sure the `postgres` container is healthy before the app starts. The setup script waits for this, but if you're starting manually, give it a few seconds after running `docker-compose up -d postgres` before starting the app container.
-
-**Migrations failed**
-
-Run migrations manually:
-
-```bash
-docker-compose exec app npm run generate & npm run pushdb
-```
 
 ## Getting help
 
