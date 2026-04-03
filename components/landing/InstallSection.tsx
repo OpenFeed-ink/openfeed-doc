@@ -10,9 +10,9 @@ const scriptCode = `<script
   data-project-id="your-project-id">
 </script>`
 
-const npmCode = `npm install @openfeed/widget
+const npmCode = `npm install @openfeed-ink/widget
 
-import { OpenFeed } from '@openfeed/widget'
+import { OpenFeed } from '@openfeed-ink/widget'
 
 <OpenFeed projectId="your-slug" />`
 

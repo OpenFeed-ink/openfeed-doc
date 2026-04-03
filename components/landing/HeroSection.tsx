@@ -327,7 +327,7 @@ export function HeroSection() {
         >
           <div className="flex items-center gap-2">🌟 Open Source</div>
           <div className="hidden sm:block text-gray-600">·</div>
-          <div className="flex items-center gap-2">📦 npm install @openfeed/widget</div>
+          <div className="flex items-center gap-2">📦 npm install @openfeed-ink/widget</div>
           <div className="hidden sm:block text-gray-600">·</div>
           <div className="flex items-center gap-2">🐳 Docker in 1 command</div>
           <div className="hidden sm:block text-gray-600">·</div>

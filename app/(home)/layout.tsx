@@ -2,6 +2,7 @@ import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { baseOptions } from '@/lib/layout.shared';
 import { Metadata, Viewport } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { OpenFeed } from '@openfeed-ink/widget'
 
 export const metadata: Metadata = {
   title: "OpenFeed: Open Source Alternative to Canny and Frill",
@@ -46,5 +47,6 @@ export default function Layout({ children }: LayoutProps<'/'>) {
   return <HomeLayout {...baseOptions()}>
     {children}
     <GoogleAnalytics gaId="G-V09MMRPE05" />
+    <OpenFeed projectId='d7i7qGBmOgOYnmvLkG1GC' />
   </HomeLayout>;
 }
