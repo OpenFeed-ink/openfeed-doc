@@ -13,7 +13,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@next/third-parties": "^16.2.2",
-    "@openfeed-ink/widget": "^0.1.3",
+    "@openfeed-ink/widget": "^0.1.4",
     "@takumi-rs/image-response": "^0.73.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
